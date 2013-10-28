@@ -51,7 +51,13 @@ extern "C" {
             Q -> head = np;
             Q -> tail = np;
         } else {
-            // otherwise set only the tail
+            // otherwise we need to search for where it belongs in the queue
+            // priority section here
+            // loop through all values in queue comparing the dates first
+                // if two have the same date compare their point values
+            
+            // insert value at this point
+            
             Q -> tail -> next = np;
             Q -> tail = np;
         }
@@ -77,18 +83,11 @@ extern "C" {
     /*Returns the value at the head of the queue without removing it*/
     QueueData getFront(Queue Q) {
         if (isEmpty(Q)) { // check if its empty first
-            printf("\nAttempt to remove from an empty queue\n");
+            printf("\nqueue empty\n");
             exit(1); // exits the program here (perhaps add error case?)
         }
         return Q->head->data; // simply return the queue data that is the current head
-    }
-    
-    int getQueueSize(Queue Q){
-        return Q->size;
-    }
-    void setQueueSize(Queue Q, int size){
-        Q->size = size;
-    }
+    }     
 
 #ifdef	__cplusplus
 }

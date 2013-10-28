@@ -7,12 +7,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#define DISABLE 1 // Make this 1 to disable AssignmentLog.c to be able to run testPQ.c
+
 
 /*
  * 
  */
+#if !DISABLE
 int main(int argc, char** argv) {
 
+    
+    
+    
     return (EXIT_SUCCESS);
 }
-
+#endif

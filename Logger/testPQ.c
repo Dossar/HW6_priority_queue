@@ -27,7 +27,7 @@ typedef struct { // QueueData = individual Assignments to be added to the queue
     char *courseName;
     char *assignmentName;
     int points;
-    Date *date;
+    Date *date; // date is a pointer to date structure which has the date information.
 } Data, *QueueData;
 
 #include "pq.h"
@@ -38,19 +38,19 @@ int main(int argc, char** argv) {
     Queue Q = (Queue) malloc(sizeof (QueueType)); // allocate base size of queue;
     Q = initQueue();
 
-    QueueData np = (QueueData) malloc(sizeof (Data)); // allocate space for new item
-    np = getData(); // collect data from user
-    enqueue(Q, np); // add data to queue    
+    QueueData np = (QueueData) malloc(sizeof (Data)); // Allocate space for new assignment.
+    np = getData(); // Collect data from user
+    enqueue(Q, np); // Add data to queue.   
 
 
-    // show output of data
-    QueueData dequeueData = malloc(sizeof (QueueData));
-    dequeueData = dequeue(Q);
-    printf("assignmentName: %s\n", dequeueData->assignmentName);
-    printf("courseName: %s\n", dequeueData->courseName);
-    printf("points: %d\n", dequeueData->points);
-    printf("due, day: %d\n", dequeueData->date->day);
-    printf("due, month: %d\n", dequeueData->date->month);
+    // Output the Assignment Data.
+    QueueData dequeueData = malloc(sizeof (QueueData)); // For storing data of dequeued element.
+    dequeueData = dequeue(Q); // Remove an assignment from the queue and save its contents.
+    printf("Assignment Name: %s\n", dequeueData->assignmentName); // Name
+    printf("Course Name: %s\n", dequeueData->courseName); // Course
+    printf("Possible Points: %d\n", dequeueData->points); // Score
+    printf("Day Due: %d\n", dequeueData->date->day); // Day
+    printf("Month Due: %d\n", dequeueData->date->month); // Month
 
 
 
@@ -60,61 +60,65 @@ int main(int argc, char** argv) {
 // helper functions
 
 QueueData getData() {
-    // allocate memory 
-    DateInfo di = (DateInfo) malloc(sizeof (Date));    
-    QueueData np = (QueueData) malloc(sizeof (Data));
+    // Allocate memory for our new assignment information.
+    DateInfo di = (DateInfo) malloc(sizeof (Date)); // Create structure containing date information   
+    QueueData np = (QueueData) malloc(sizeof (Data)); // Create a node pointer for assignment data
     
-    // variables used for data collection
+    // Variables used for giving data to assignment.
     char *assignmentName;
     char *courseName;
     int points;
     int day;
     int month;
     
-    // get user input
+    /*
+       Note: %[^\n]%*c is being used instead of the gets function to get a string from user.     
+     */
+    
+    // Get user input for name of assignment and course.
     printf("INPUT ASSIGNMENT,\n");
-    printf("assignmentName: ");
-    scanf ("%[^\n]%*c", assignmentName);
-    printf("courseName: ");
-    scanf ("%[^\n]%*c", courseName);
+    printf("Assignment Name: ");
+    scanf("%[^\n]%*c", assignmentName);
+    printf("Course Name: ");
+    scanf("%[^\n]%*c", courseName);
 
     while (1) {
-        printf("points: ");
+        printf("Possible Points: ");
         if (scanf("%d", &points)) {
-            break;
+            break; // Leave the while loop if an integer was entered.
         } else {
-            /**** Erroneous input, get rid of it and retry! */
+            // Otherwise, the user entered something erroneous. Continue asking for score input.
             scanf("%*[^\n]");
         }
     }
     while (1) {
-        printf("due, day: ");
+        printf("Day Due: ");
         if (scanf("%d", &day)) {
-            break;
+            break; // Leave the while loop if an integer was entered.
         } else {
-            /**** Erroneous input, get rid of it and retry! */
+            // Otherwise, the user entered something erroneous. Continue asking for score input.
             scanf("%*[^\n]");
         }
     }
     while (1) {
-        printf("due, month: ");
+        printf("Month Due: ");
         if (scanf("%d", &month)) {
-            break;
+            break; // Leave the while loop if an integer was entered.
         } else {
-            /**** Erroneous input, get rid of it and retry! */
+            // Otherwise, the user entered something erroneous. Continue asking for score input.
             scanf("%*[^\n]");
         }
     }
 
-    // assign collected values to their corresponding components in data structure
+    // Assign collected values to their corresponding components in data structure
     di->day = day;
     di->month = month;
     np->assignmentName = assignmentName;
     np->courseName = courseName;
     np->points = points;
-    np->date = di;
+    np->date = di; // Assign date information to our np pointer.
     
-    return np; // return new assingment to be added to the queue
+    return np; // Return new assignment to be added to the queue.
 }
 
 
